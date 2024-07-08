@@ -18,8 +18,7 @@ const setThemeOnLoad = () => {
     document.body.classList.add("dark-theme");
   }
 };
-
-document.addEventListener("DOMContentLoaded", setThemeOnLoad);
+setThemeOnLoad()
 
 const sortElementStyle = () => {
   if (bodyElement.classList.contains("dark-theme")) {

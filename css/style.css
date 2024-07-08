@@ -90,9 +90,24 @@ button {
   padding: 11px;
   border: 1px solid var(--main-purple);
   border-radius: 5px;
-  width: 600px;
+  min-width: 400px;
+  max-width: 600px;
   height: 40px;
   transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.search__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.search__items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
 .search__input:focus {
@@ -124,7 +139,7 @@ body.dark-theme .search__input:focus {
 }
 
 .search__theme-toggle {
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease-in-out;
   background: var(--main-purple) url(../img/darkThemeIcon.svg) no-repeat center
     center;
   padding: 8px;
@@ -183,7 +198,6 @@ body.dark-theme .search__theme-toggle:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   cursor: pointer;
   gap: 15px;
 }
@@ -217,6 +231,7 @@ body.dark-theme .search__theme-toggle:hover {
   gap: 15px;
 }
 .task__title {
+  font-family: var(--main-Inter);
   font-size: 20px;
 }
 
@@ -229,5 +244,89 @@ body.dark-theme .search__theme-toggle:hover {
 .task__delete-action:hover {
   svg path {
     stroke: #e50000;
+  }
+}
+
+@media (max-width: 768px) {
+  .tasks {
+    max-width: 500px;
+    min-width: 300px;
+  }
+
+  .task__title{
+    font-size: 18px;
+  }
+
+  .search__wrapper {
+    gap: 10px;
+  }
+
+  .search__items,
+  .search__actions {
+    gap: 10px;
+  }
+
+  .search__input {
+    min-width: 300px;
+    max-width: 600px;
+  }
+
+  .search__sort {
+  }
+}
+
+@media (max-width: 600px) {
+  .search__input {
+    min-width: 200px;
+    max-width: 600px;
+  }
+
+  .search__wrapper {
+    flex-wrap: wrap-reverse;
+  }
+
+  .search__actions {
+    gap: 285px;
+  }
+
+  .tasks {
+    min-width: 200px;
+    max-width: 400px;
+  }
+
+  .task__title{
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 425px) {
+  .tasks{
+    max-width: 300px;
+  }
+
+  .task__title{
+    font-size: 16px;
+
+  }
+
+
+
+  .task__title{
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 375px) {
+  .search__input{
+    min-width: 150px;
+    max-width: 150px;
+  }
+
+  .search__actions{
+    gap:220px;
+  }
+
+  .task__title{
+    font-size: 14px;
   }
 }
