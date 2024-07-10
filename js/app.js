@@ -167,7 +167,8 @@ applyTaskButton.onclick = () => {
       "beforeend",
       getTaskTemplate(popupInput.value)
     );
-    
+    popupInput.value = '';
+    togglePopup()
   }
 };
 
