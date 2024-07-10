@@ -25,7 +25,6 @@
 
             <div class="search">
               <div class="search__wrapper">
-
                 <div class="search__items">
                   <input
                     class="search__input"
@@ -34,9 +33,11 @@
                     id="search"
                     placeholder="Search task..."
                   />
-  
+
                   <select name="" id="sort" class="search__sort">
-                    <option class="search__sort-element" value="All">All</option>
+                    <option class="search__sort-element" value="All">
+                      All
+                    </option>
                     <option class="search__sort-element" value="Complete">
                       Complete
                     </option>
@@ -46,9 +47,12 @@
                   </select>
                 </div>
                 <div class="search__actions">
-                  <button class="search__theme-toggle" id="theme-toggle"></button>
-  
-                  <button class="search__new-task">
+                  <button
+                    class="search__theme-toggle"
+                    id="theme-toggle"
+                  ></button>
+
+                  <button class="search__new-task" id="open-popup">
                     <img src="img/newTask.svg" alt="new task" />
                   </button>
                 </div>
@@ -58,8 +62,30 @@
             <div class="tasks">
               <div class="tasks__wrapper">
                 <div class="container">
-                  <ul class="tasks-list">
-                    <li class="task">
+                  <div class="tasks__popup-bg" id="popupBG">
+                    <div class="tasks__popup" id="popup">
+                      <div class="tasks-popup__wrapper">
+                        <h2 class="task-popup__title title">New Task</h2>
+  
+                        <input
+                          class="task-popup__input"
+                          id="popup-input"
+                          type="text"
+                          value=""
+                          placeholder="Input your task..."
+                        />
+  
+                        <div class="task-popup__actions">
+                          <button class="task-popup-actions__cancel" id="cancel-popup">
+                            Cancel
+                          </button>
+                          <button class="task-popup-actions__apply" id="apply-popup">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="tasks-list" id="tasks-list">
+                    <!-- <li class="task">
                       <div class="task__wrapper">
                         <div class="task__content">
                           <label class="task__checkbox-label">
@@ -198,7 +224,7 @@
                           </button>
                         </div>
                       </div>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>
