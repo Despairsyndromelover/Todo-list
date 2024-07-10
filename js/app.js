@@ -168,7 +168,7 @@ applyTaskButton.onclick = () => {
       getTaskTemplate(popupInput.value)
     );
     popupInput.value = '';
-    togglePopup()
+    togglePopup() // 123
   }
 };
 
