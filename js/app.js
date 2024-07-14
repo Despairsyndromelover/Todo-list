@@ -63,17 +63,17 @@ const tasksList = document.getElementById("tasks-list");
 const togglePopup = () => {
   taskPopupBackground.classList.toggle("active");
   taskPopup.classList.toggle("active");
-}
+};
 newTaskButton.onclick = () => {
-  togglePopup()
+  togglePopup();
 };
 
 cancelTaskButton.onclick = () => {
-  togglePopup()
+  togglePopup();
 };
 
-const getTaskTemplate = (title) => {
-  return `<li class="task">
+const getTaskTemplate = (title, index) => {
+  return `<li class="task" id="${index}">
                       <div class="task__wrapper">
                         <div class="task__content">
                           <label class="task__checkbox-label">
@@ -145,30 +145,66 @@ const getTaskTemplate = (title) => {
                     </li>`;
 };
 
+const newTask = (title) => {
+  return {
+    title: title,
+    done: false,
+  };
+};
+const tasks = [];
 
+const setTasks = () => localStorage.setItem("tasks", JSON.stringify(tasks));
 
-const tasks = [
-  { title: "Вынести мусор", done: false },
-  { title: "Приготовить обед", done: false },
-  { title: "Сходить в зал", done: true },
-];
+let tasksInStorage = JSON.parse(localStorage.getItem("tasks"));
 
-tasks.forEach((task) => {
-  tasksList.insertAdjacentHTML(
-    'beforeend',
-    getTaskTemplate(task.title))
-})
+const checkTasks = () => {
+  if (tasksInStorage) {
+    tasksInStorage.forEach((task) => {
+      tasks.push(task);
+    });
+  }
+};
+checkTasks();
+
+tasks.forEach((task, index) => {
+  tasksList.insertAdjacentHTML("beforeend", getTaskTemplate(task.title, index));
+});
+
+let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
+const updateTaskState = () => {
+  tasksCheckboxes.forEach((checkbox, index) => {
+    checkbox.onclick = () => {
+      tasks[index].done = true;
+      if (tasks[index].done) {
+        checkbox.parentElement.classList.toggle("done");
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+      }
+
+      if (!checkbox.parentElement.classList.contains("done")) {
+        tasks[index].done = false;
+      }
+
+      console.log(tasks[index].done)
+    };
+  });
+};
+updateTaskState();
 
 applyTaskButton.onclick = () => {
   if (popupInput.value.length === 0) {
-    console.log(123);
+    return null;
   } else {
+    tasks.push(newTask(popupInput.value));
     tasksList.insertAdjacentHTML(
       "beforeend",
-      getTaskTemplate(popupInput.value)
+      getTaskTemplate(popupInput.value, tasks.length - 1)
     );
-    popupInput.value = '';
-    togglePopup() // 123
+    popupInput.value = "";
+    togglePopup();
+    tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
+    updateTaskState();
+    setTasks();
   }
 };
+
 

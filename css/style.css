@@ -352,7 +352,6 @@ margin-bottom: 15px
   text-align: center;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-
 }
 
 .task-popup-actions__apply:hover{
@@ -364,6 +363,10 @@ margin-bottom: 15px
   color: var(--text-color)
 }
 
+.done{
+  text-decoration: line-through;
+  
+}
 @media (max-width: 768px) {
   .tasks {
     max-width: 500px;
