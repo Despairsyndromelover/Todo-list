@@ -225,6 +225,11 @@ body.dark-theme .search__theme-toggle:hover {
     3px;
 }
 
+.checkbox-done{
+    background: var(--main-purple) url(../img/checkboxArrow.svg) no-repeat center
+    3px;
+}
+
 .task__actions {
   display: flex;
   align-items: center;
@@ -233,6 +238,7 @@ body.dark-theme .search__theme-toggle:hover {
 .task__title {
   font-family: var(--main-Inter);
   font-size: 20px;
+  cursor:default;
 }
 
 .task__edit-action:hover {
@@ -309,7 +315,8 @@ body.dark-theme .tasks__popup{
   color:var(--main-black);
   min-width: 450px;
   height: 40px;
-  font-family: var(--main-Kanit);
+  font-family: var(--main-Inter);
+  font-weight: 600;
   font-size: 16px;
   border: 1px solid var(--accent-color);
   border-radius: 3px;
@@ -365,7 +372,10 @@ margin-bottom: 15px
 
 .done{
   text-decoration: line-through;
-  
+}
+
+.hidden{
+  display: none;
 }
 @media (max-width: 768px) {
   .tasks {

@@ -59,7 +59,7 @@ const taskPopupBackground = document.getElementById("popupBG");
 const taskPopup = document.getElementById("popup");
 const popupInput = document.getElementById("popup-input");
 const tasksList = document.getElementById("tasks-list");
-
+const fakeCheckbox = document.getElementsByClassName("fake-task__checkbox");
 const togglePopup = () => {
   taskPopupBackground.classList.toggle("active");
   taskPopup.classList.toggle("active");
@@ -166,11 +166,37 @@ const checkTasks = () => {
 };
 checkTasks();
 
+
+
 tasks.forEach((task, index) => {
   tasksList.insertAdjacentHTML("beforeend", getTaskTemplate(task.title, index));
+
+  if (task.done) {
+    tasksList.children[index].classList.add("done");    
+    checkboxDoneState();
+  } else {
+    tasksList.children[index].classList.remove("done");
+    checkboxNotDoneState();
+  }
 });
 
 let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
+function checkboxDoneState() {
+let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
+
+  tasksCheckboxes.forEach((checkbox, index) => {
+    tasksCheckboxes[index].classList.add("checkbox-done");
+  })
+}
+function checkboxNotDoneState() {
+let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
+
+  tasksCheckboxes.forEach((checkbox, index) => {
+    tasksCheckboxes[index].classList.remove("checkbox-done");
+  })
+}
+
+
 const updateTaskState = () => {
   tasksCheckboxes.forEach((checkbox, index) => {
     checkbox.onclick = () => {
@@ -182,9 +208,19 @@ const updateTaskState = () => {
 
       if (!checkbox.parentElement.classList.contains("done")) {
         tasks[index].done = false;
+        localStorage.setItem("tasks", JSON.stringify(tasks));
       }
 
-      console.log(tasks[index].done)
+      if (tasks[index].done) {
+        tasksList.children[index].classList.add("done");
+        tasksCheckboxes[index].classList.add("checkbox-done");
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+      } else {
+        tasksList.children[index].classList.remove("done");
+        tasksCheckboxes[index].classList.remove("checkbox-done");
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+
+      }
     };
   });
 };
@@ -207,4 +243,21 @@ applyTaskButton.onclick = () => {
   }
 };
 
+// ! LIVE SEARCH
 
+document.querySelector("#search").oninput = function(){
+  let value = this.value.trim();
+  let tasksForSearch = document.querySelectorAll(".task");
+  if(value != ""){
+    tasksForSearch.forEach((task) => {
+      if(task.textContent.search(value) == -1){
+        task.classList.add("hidden");
+      } else{
+        task.classList.remove("hidden");
+      }
+    })
+  } else{
+    tasksForSearch.forEach((task) => {
+        task.classList.remove("hidden");
+  });
+}}
