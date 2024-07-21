@@ -207,15 +207,14 @@ const deleteTask = () => {
 
   deleteTasksButtons.forEach((button) => {
     button.onclick = () => {
-      const taskItem = button.closest('.task'); // предполагается, что у вас есть класс 'task-item'
+      const taskItem = button.closest('.task');
       if (taskItem) {
-        // Определяем индекс элемента в массиве
         const index = Array.from(deleteTasksButtons).indexOf(button); 
-        tasks.splice(index, 1); // Удаляем задачу из массива
-        taskItem.remove(); // Удаляем элемент задачи из DOM
-        setTasks(); // Обновляем localStorage
-        deleteTask(); // Переопределяем кнопки удаления
-        updateTaskState(); // Переопределяем состояние задач
+        tasks.splice(index, 1);
+        taskItem.remove();
+        setTasks();
+        deleteTask();
+        updateTaskState(); 
       }
     };
   });
@@ -258,24 +257,3 @@ document.querySelector("#search").oninput = function () {
     });
   }
 };
-
-// ! Delete task functionality
-
-// const deleteTasksButtons = document.querySelectorAll(".task__delete-action");
-// const deleteTask = () => deleteTasksButtons.forEach((button) => {
-//   button.onclick = () => {
-//     tasks.splice(button.id, 1);
-//     tasksList.children[button.id].remove();
-//     setTasks();
-//   };
-// });
-// deleteTask();
-
-const selectTasks = document.querySelector(".search__sort");
-const selectTasksLabels = document.querySelectorAll(".search__sort-element");
-
-selectTasksLabels.forEach((label, index) => {
-  if(label.value === 'Complete'){
-    
-  }
-})
