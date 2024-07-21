@@ -90,7 +90,7 @@ button {
   padding: 11px;
   border: 1px solid var(--main-purple);
   border-radius: 5px;
-  min-width: 400px;
+  min-width: 560px;
   max-width: 600px;
   height: 40px;
   transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
@@ -407,16 +407,16 @@ margin-bottom: 15px
 
 @media (max-width: 600px) {
   .search__input {
-    min-width: 200px;
+    min-width: 250px;
     max-width: 600px;
   }
 
   .search__wrapper {
-    flex-wrap: wrap-reverse;
+    gap: 20px;
   }
 
   .search__actions {
-    gap: 285px;
+    gap: 20px;
   }
 
   .tasks {
@@ -450,9 +450,12 @@ margin-bottom: 15px
 
   .task__title{
     font-size: 16px;
-
   }
 
+  .search__input{
+    min-width: 150px;
+    max-width: 150px;
+  }
 
 
   .task__title{
@@ -467,7 +470,7 @@ margin-bottom: 15px
   }
 
   .search__actions{
-    gap:220px;
+    gap:20px;
   }
 
   .task__title{

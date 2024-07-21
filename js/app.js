@@ -64,10 +64,10 @@ const togglePopup = () => {
   taskPopupBackground.classList.toggle("active");
   taskPopup.classList.toggle("active");
 };
+
 newTaskButton.onclick = () => {
   togglePopup();
 };
-
 cancelTaskButton.onclick = () => {
   togglePopup();
 };
@@ -91,23 +91,7 @@ const getTaskTemplate = (title, index) => {
                         </div>
 
                         <div class="task__actions">
-                          <button class="task__action task__edit-action">
-                            <svg
-                              width="18"
-                              height="18"
-                              viewBox="0 0 18 18"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M8.67272 5.99106L2 12.6637V16H5.33636L12.0091 9.32736M8.67272 5.99106L11.0654 3.59837L11.0669 3.59695C11.3962 3.26759 11.5612 3.10261 11.7514 3.04082C11.9189 2.98639 12.0993 2.98639 12.2669 3.04082C12.4569 3.10257 12.6217 3.26735 12.9506 3.59625L14.4018 5.04738C14.7321 5.37769 14.8973 5.54292 14.9592 5.73337C15.0136 5.90088 15.0136 6.08133 14.9592 6.24885C14.8974 6.43916 14.7324 6.60414 14.4025 6.93398L14.4018 6.93468L12.0091 9.32736M8.67272 5.99106L12.0091 9.32736"
-                                stroke="#CDCDCD"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
-                          </button>
-                          <button class="task__action task__delete-action">
+                          <button class="task__action task__delete-action" id=${index}>
                             <svg
                               width="18"
                               height="18"
@@ -151,12 +135,10 @@ const newTask = (title) => {
     done: false,
   };
 };
+
 const tasks = [];
-
 const setTasks = () => localStorage.setItem("tasks", JSON.stringify(tasks));
-
 let tasksInStorage = JSON.parse(localStorage.getItem("tasks"));
-
 const checkTasks = () => {
   if (tasksInStorage) {
     tasksInStorage.forEach((task) => {
@@ -166,13 +148,11 @@ const checkTasks = () => {
 };
 checkTasks();
 
-
-
 tasks.forEach((task, index) => {
   tasksList.insertAdjacentHTML("beforeend", getTaskTemplate(task.title, index));
 
   if (task.done) {
-    tasksList.children[index].classList.add("done");    
+    tasksList.children[index].classList.add("done");
     checkboxDoneState();
   } else {
     tasksList.children[index].classList.remove("done");
@@ -182,20 +162,17 @@ tasks.forEach((task, index) => {
 
 let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
 function checkboxDoneState() {
-let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
-
+  let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
   tasksCheckboxes.forEach((checkbox, index) => {
     tasksCheckboxes[index].classList.add("checkbox-done");
-  })
+  });
 }
 function checkboxNotDoneState() {
-let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
-
+  let tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
   tasksCheckboxes.forEach((checkbox, index) => {
     tasksCheckboxes[index].classList.remove("checkbox-done");
-  })
+  });
 }
-
 
 const updateTaskState = () => {
   tasksCheckboxes.forEach((checkbox, index) => {
@@ -219,13 +196,31 @@ const updateTaskState = () => {
         tasksList.children[index].classList.remove("done");
         tasksCheckboxes[index].classList.remove("checkbox-done");
         localStorage.setItem("tasks", JSON.stringify(tasks));
-
       }
     };
   });
 };
 updateTaskState();
 
+const deleteTask = () => {
+  const deleteTasksButtons = document.querySelectorAll(".task__delete-action");
+
+  deleteTasksButtons.forEach((button) => {
+    button.onclick = () => {
+      const taskItem = button.closest('.task'); // предполагается, что у вас есть класс 'task-item'
+      if (taskItem) {
+        // Определяем индекс элемента в массиве
+        const index = Array.from(deleteTasksButtons).indexOf(button); 
+        tasks.splice(index, 1); // Удаляем задачу из массива
+        taskItem.remove(); // Удаляем элемент задачи из DOM
+        setTasks(); // Обновляем localStorage
+        deleteTask(); // Переопределяем кнопки удаления
+        updateTaskState(); // Переопределяем состояние задач
+      }
+    };
+  });
+};
+deleteTask();
 applyTaskButton.onclick = () => {
   if (popupInput.value.length === 0) {
     return null;
@@ -240,24 +235,47 @@ applyTaskButton.onclick = () => {
     tasksCheckboxes = document.querySelectorAll(".real-task__checkbox");
     updateTaskState();
     setTasks();
+    deleteTask();
   }
 };
 
-// ! LIVE SEARCH
+// ! Live search functionality
 
-document.querySelector("#search").oninput = function(){
+document.querySelector("#search").oninput = function () {
   let value = this.value.trim();
   let tasksForSearch = document.querySelectorAll(".task");
-  if(value != ""){
+  if (value != "") {
     tasksForSearch.forEach((task) => {
-      if(task.textContent.search(value) == -1){
+      if (task.textContent.search(value) == -1) {
         task.classList.add("hidden");
-      } else{
+      } else {
         task.classList.remove("hidden");
       }
-    })
-  } else{
+    });
+  } else {
     tasksForSearch.forEach((task) => {
-        task.classList.remove("hidden");
-  });
-}}
+      task.classList.remove("hidden");
+    });
+  }
+};
+
+// ! Delete task functionality
+
+// const deleteTasksButtons = document.querySelectorAll(".task__delete-action");
+// const deleteTask = () => deleteTasksButtons.forEach((button) => {
+//   button.onclick = () => {
+//     tasks.splice(button.id, 1);
+//     tasksList.children[button.id].remove();
+//     setTasks();
+//   };
+// });
+// deleteTask();
+
+const selectTasks = document.querySelector(".search__sort");
+const selectTasksLabels = document.querySelectorAll(".search__sort-element");
+
+selectTasksLabels.forEach((label, index) => {
+  if(label.value === 'Complete'){
+    
+  }
+})
